@@ -1,0 +1,22 @@
+Project Name: BBMS Blood Bank Management System
+
+Works as a gateway / communication path for blood donors & recievers.
+
+Features:
+
+For Donors:
+Users can signup/login to donate their blood.
+Users can update their profile information.
+Users can mark blood as unavailable after they have donated it to somebody.
+
+Note: Each user is allowed only to donate their blood once every 3 months.
+
+For Recievers:
+Users can directly see all available blood in our system
+Users can search according to location and/or blood group
+Users can directly contact donors in our system via their phone or email
+
+For Admins:
+Admin can see all info about total users and total blood donations.
+Admin can view and manage all blood donation records.
+Admin can view and manage all user records. 
