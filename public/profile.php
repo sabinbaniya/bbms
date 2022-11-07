@@ -7,31 +7,36 @@ if (!isset($_SESSION["loggedin"])) {
 
 require_once("../app/db/index.php");
 
-if ($stmt = $conn->prepare("SELECT name, bloodgroup, district, email, mobile, lastdonated, dob FROM users WHERE id = ? ")) {
-    $stmt->bind_param("i", $_SESSION["id"]);
-    $stmt->execute();
-    $stmt->store_result();
-    $stmt->bind_result($name, $bloodgroup, $district, $email, $mobile, $lastdonated, $dob);
-    $stmt->fetch();
-}
+if (isset($_POST["mark_unavailable"])) {
+    // var_dump($_POST);
+    // $str = "hello";
+    // var_dump($str);
+    //echo ($conn->prepare("DELETE FROM blood_records WHERE userid = ?"));
+    $stmt2 = $conn->prepare("DELETE FROM blood_records WHERE userid = ?");
+    // var_dump($stmt2);
+    // echo "here";
+    $stmt2->bind_param("i", $_SESSION["id"]);
+    $stmt2->execute();
+    if ($stmt2->affected_rows > 0) {
+        header("Location: ./profile.php?status=success&message=Successfully deleted your blood record.");
+        return;
+    }
+    header("Location: ./profile.php?status=failure&message=Couldn't delete that blood record.");
+} else {
+    if ($stmt = $conn->prepare("SELECT name, bloodgroup, district, email, mobile, lastdonated, dob FROM users WHERE id = ? ")) {
+        $stmt->bind_param("i", $_SESSION["id"]);
+        $stmt->execute();
+        $stmt->store_result();
+        $stmt->bind_result($name, $bloodgroup, $district, $email, $mobile, $lastdonated, $dob);
+        $stmt->fetch();
+    }
 
-if ($stmt1 = $conn->prepare("SELECT id FROM blood_records WHERE userid = ? ")) {
-    $stmt1->bind_param("i", $_SESSION["id"]);
-    $stmt1->execute();
-}
-
-if (isset($_POST["mark-unavailable"])) {
-    if ($stmt2 = $conn->prepare("DELETE FROM blood_records WHERE userid = ?")) {
-        $stmt2->bind_param("i", $_SESSION["id"]);
-        $stmt2->execute();
-        if ($stmt2->affected_rows > 0) {
-            header("Location: ./profile.php?status=success&message=Successfully deleted your blood record.");
-            return;
-        }
-        header("Location: ./profile.php?status=failure&message=Couldn't delete that blood record.");
+    if ($stmt1 = $conn->prepare("SELECT id FROM blood_records WHERE userid = ? ")) {
+        $stmt1->bind_param("i", $_SESSION["id"]);
+        $stmt1->execute();
+        // var_dump($stmt1);
     }
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -95,13 +100,13 @@ if (isset($_POST["mark-unavailable"])) {
                 <?php } ?>
             </div>
             <?php
-            if ($stmt1->affected_rows !== 0) {
+            if ($stmt1->affected_rows > 0) {
             ?>
                 <div class="text-center mt-16">
                     <h1 class="font-bold text-3xl">Blood Availability</h1>
                     <p class="font-medium text-gray-500 text-base mt-2 max-w-2xl mx-auto">If the blood you donated last time isn't currently available then please mark the record as unavailable using button below, so that it won't show up on search</p>
                     <form action="./profile.php" method="POST">
-                        <button name="mark-unavailable" class="bg-blue-400 px-6 py-2 font-semibold text-sm text-white rounded-md mt-6">Mark Unavailable</button>
+                        <button type="submit" name="mark_unavailable" class="bg-blue-400 px-6 py-2 font-semibold text-sm text-white rounded-md mt-6">Mark Unavailable</button>
                     </form>
                 </div>
             <?php
