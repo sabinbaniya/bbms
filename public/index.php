@@ -79,7 +79,7 @@ if (isset($_POST['search'])) {
                     <button type="submit" name="search" class="bg-blue-400 text-white rounded-lg w-full py-2 my-4 hover:bg-blue-500 focus:ring focus:ring-blue-500 focus:ring-offset-2 font-bold">Search</button>
                 </div>
             </form>
-            <div>
+            <div class=" max-h-[50vh] overflow-auto">
                 <?php
                 if (isset($_POST['search'])) {
                     if ($stmt1->num_rows() === 0) {
@@ -97,7 +97,7 @@ if (isset($_POST['search'])) {
                     ?>
                         <table id="results" class="max-w-2xl">
                             <tr>
-                                <th>S. No</th>
+                                <th>S. N</th>
                                 <th>Donor Name</th>
                                 <th>Contact Email</th>
                                 <th>Contact Phone</th>

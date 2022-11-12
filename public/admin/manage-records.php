@@ -53,30 +53,31 @@ if (isset($_GET["id"])) {
     <?php require_once("../include/admin/navbar.php") ?>
     <main class="relative min-h-[92vh] max-h-[92vh] w-full bg-gray-200 px-2 sm:px-4 grid place-items-center bg-center bg-no-repeat bg-cover">
         <?php require_once("../include/notification.php") ?>
-        <?php
-        if ($stmt1->num_rows() === 0) {
-        ?>
-            <span class="text-xl font-bold">No Blood Records Found</span>
-        <?php
-        } else {
-        ?>
-            <table id="results" class="max-w-7xl">
-                <tr>
-                    <th>S. No</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Phone</th>
-                    <th>Blood Group</th>
-                    <th>District</th>
-                    <th>Donated on</th>
-                    <th>Donation Count</th>
-                    <th>Verified User</th>
-                    <th>Actions</th>
-                </tr>
-                <?php
-                $count = 1;
-                while ($stmt1->fetch()) {
-                    echo '<tr>
+        <div class="max-h-[80vh] overflow-auto">
+            <?php
+            if ($stmt1->num_rows() === 0) {
+            ?>
+                <span class="text-xl font-bold">No Blood Records Found</span>
+            <?php
+            } else {
+            ?>
+                <table id="results" class="max-w-7xl">
+                    <tr>
+                        <th>S. No</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Blood Group</th>
+                        <th>District</th>
+                        <th>Donated on</th>
+                        <th>Donation Count</th>
+                        <th>Verified User</th>
+                        <th>Actions</th>
+                    </tr>
+                    <?php
+                    $count = 1;
+                    while ($stmt1->fetch()) {
+                        echo '<tr>
                                     <td>' . $count . '</td>
                                     <td>' . $name . '</td>
                                     <td>' . $email . '</td>
@@ -86,14 +87,16 @@ if (isset($_GET["id"])) {
                                     <td>' . $donated_on . '</td>
                                     <td>' . $dc . '</td>
                                     <td>' . ($av ? "Yes" : "No") . '</td>
-                                    <td><a href="./manage-records.php?id=' . $bid . '">Delete</a></td>
+                                    <td><a class="hover:underline" href="./manage-records.php?id=' . $bid . '">Delete</a></td>
                                 </tr>';
 
-                    $count++;
-                }
-                ?>
-            </table>
-        <?php } ?>
+                        $count++;
+                    }
+                    ?>
+                </table>
+            <?php } ?>
+        </div>
+
     </main>
 </body>
 

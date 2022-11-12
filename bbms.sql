@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 05, 2022 at 12:12 PM
+-- Generation Time: Nov 12, 2022 at 01:44 PM
 -- Server version: 8.0.27
 -- PHP Version: 7.4.26
 
@@ -57,16 +57,31 @@ CREATE TABLE IF NOT EXISTS `blood_records` (
   `bloodgroup` varchar(20) NOT NULL,
   `district` varchar(20) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `blood_records`
 --
 
 INSERT INTO `blood_records` (`id`, `userid`, `timestamps`, `bloodgroup`, `district`) VALUES
-(16, 2, '2022-09-24 03:05:37', 'B+', 'Kaski'),
-(17, 3, '2022-09-24 06:14:44', 'AB+', 'Dhankuta'),
-(20, 5, '2022-11-05 10:46:20', 'O+', 'Achham');
+(29, 10, '2022-11-07 03:35:22', 'O+', 'Dhading'),
+(30, 9, '2022-11-12 12:47:39', 'O-', 'Achham'),
+(35, 12, '2022-11-12 13:41:36', 'B+', 'Kaski'),
+(36, 13, '2022-11-12 13:41:36', 'B+', 'Dhankuta'),
+(37, 14, '2022-11-12 13:41:36', 'B-', 'Kaski'),
+(38, 15, '2022-11-12 13:41:36', '0+', 'Kathmandu'),
+(39, 16, '2022-11-12 13:41:36', 'B+', 'Kaski'),
+(40, 17, '2022-11-12 13:41:36', 'A-', 'Lalitpur'),
+(41, 18, '2022-11-12 13:41:36', 'B+', 'Kaski'),
+(42, 19, '2022-11-12 13:41:36', 'AB+', 'Dhankuta'),
+(43, 20, '2022-11-12 13:41:36', 'B+', 'Kaski'),
+(44, 21, '2022-11-12 13:41:36', 'AB+', 'Accham'),
+(45, 22, '2022-11-12 13:41:36', 'B+', 'Kaski'),
+(46, 23, '2022-11-12 13:41:36', 'AB+', 'Dhankuta'),
+(47, 24, '2022-11-12 13:41:36', 'B+', 'Kaski'),
+(48, 25, '2022-11-12 13:41:36', 'AB+', 'Baglung'),
+(49, 26, '2022-11-12 13:41:36', 'B+', 'Kaski'),
+(50, 27, '2022-11-12 13:41:36', 'AB+', 'Dhankuta');
 
 -- --------------------------------------------------------
 
@@ -180,16 +195,35 @@ CREATE TABLE IF NOT EXISTS `users` (
   `lastdonated` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `dob` varchar(50) NOT NULL,
   `timestamps` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `admin_verified` tinyint(1) NOT NULL DEFAULT '0',
+  `donation_count` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb3;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `name`, `bloodgroup`, `district`, `email`, `mobile`, `password`, `lastdonated`, `dob`, `timestamps`) VALUES
-(2, 'Sabin', 'B+', 'Kaski', 'sabin@gmail.com', '9806542271', '$2y$10$lmdIkIg01tu9QZlHEZ.Pj.a70YDmZKiwcO5tyrghoYOzJTEdxs0PS', '2022-09-24', '', '2022-09-24 02:47:02'),
-(3, 'jhon', 'AB+', 'Dhankuta', 'jhon@gmail.com', '1234567890', '$2y$10$Ewsh6JMte5RiJewPBCXFBODuDeGZAwD5u0ZFP4EqOHOetyMH.MTs2', '2022-09-24', '', '2022-09-24 06:10:21');
+INSERT INTO `users` (`id`, `name`, `bloodgroup`, `district`, `email`, `mobile`, `password`, `lastdonated`, `dob`, `timestamps`, `admin_verified`, `donation_count`) VALUES
+(9, 'john cena', 'O-', 'Achham', 'jhon@gmail.com', '32894893274', '$2y$10$s9dXS/kKaBgoh8YEQhMDBeorjf6RRiZg1HN9lENgkQmca5hZ.vIqi', '2022-11-12', '2000-02-02', '2022-11-05 12:49:34', 1, 2),
+(10, 'test', 'O+', 'Dhading', 'test@test.com', '12345678', '$2y$10$MBCZ5KuDaIlQFD.mffzKwOgwWxogrpUeWr4XRuoVr1QlYkH.RFYS6', '2022-11-07', '2022-11-03', '2022-11-07 03:35:14', 0, 0),
+(11, 'jg', 'O+', 'Dhanusa', 'jg@outlook.com', '873439382', '$2y$10$p6kbGkzrtYkD6McAiL.3seHxmHab2YMVmkwrNZ1LfHkjWEcCTU4Dm', '', '2001-06-21', '2022-11-12 13:33:21', 0, 0),
+(12, 'Hari Gurung', 'B+', 'Kaski', 'hari@gmail.com', '982367421', '$2y$10$lmdIkIg01tu9QZlHEZ.Pj.a70YDmZKiwcO5tyrghoYOzJTEdxs0PS', '2022-10-24', '1990-02-28', '2022-11-12 13:42:47', 1, 2),
+(13, 'Ram K.C', 'AB+', 'Dhankuta', 'ram@yahoo.com', '980839322', '$2y$10$Ewsh6JMte5RiJewPBCXFBODuDeGZAwD5u0ZFP4EqOHOetyMH.MTs2', '2022-11-07', '1989-07-11', '2022-11-12 13:42:47', 0, 3),
+(14, 'Rita Gurung', 'B-', 'Kaski', 'rita@gmail.com', '982367421', '$2y$10$lmdIkIg01tu9QZlHEZ.Pj.a70YDmZKiwcO5tyrghoYOzJTEdxs0PS', '2021-10-24', '1990-02-28', '2022-11-12 13:42:47', 1, 4),
+(15, 'Shyam K.C', '0+', 'Kathmandu', 'Shyam@yahoo.com', '9802339322', '$2y$10$Ewsh6JMte5RiJewPBCXFBODuDeGZAwD5u0ZFP4EqOHOetyMH.MTs2', '2021-11-07', '1989-07-11', '2022-11-12 13:42:47', 0, 5),
+(16, 'Ghanshyam Poudel', 'B+', 'Kaski', 'ghanshyam@gmail.com', '982367421', '$2y$10$lmdIkIg01tu9QZlHEZ.Pj.a70YDmZKiwcO5tyrghoYOzJTEdxs0PS', '2021-10-24', '1990-02-28', '2022-11-12 13:42:47', 0, 1),
+(17, 'Bikram Karki', 'A-', 'Lalitpur', 'bikram@yahoo.com', '9802193213', '$2y$10$Ewsh6JMte5RiJewPBCXFBODuDeGZAwD5u0ZFP4EqOHOetyMH.MTs2', '2020-11-07', '1989-07-11', '2022-11-12 13:42:47', 1, 1),
+(18, 'Sita Gurung', 'B+', 'Kaski', 'Sita@gmail.com', '982367421', '$2y$10$lmdIkIg01tu9QZlHEZ.Pj.a70YDmZKiwcO5tyrghoYOzJTEdxs0PS', '2020-10-24', '1990-02-28', '2022-11-12 13:42:47', 0, 5),
+(19, 'Ramchandra K.C', 'AB+', 'Dhankuta', 'Ramchandra@yahoo.com', '980839322', '$2y$10$Ewsh6JMte5RiJewPBCXFBODuDeGZAwD5u0ZFP4EqOHOetyMH.MTs2', '2020-11-07', '1989-07-11', '2022-11-12 13:42:47', 1, 3),
+(20, 'Bikal Gurung', 'B+', 'Kaski', 'Bikal@gmail.com', '982367421', '$2y$10$lmdIkIg01tu9QZlHEZ.Pj.a70YDmZKiwcO5tyrghoYOzJTEdxs0PS', '2019-10-24', '1990-02-28', '2022-11-12 13:42:47', 0, 2),
+(21, 'Ramesh K.C', 'AB+', 'Accham', 'ramesh@yahoo.com', '980839322', '$2y$10$Ewsh6JMte5RiJewPBCXFBODuDeGZAwD5u0ZFP4EqOHOetyMH.MTs2', '2019-11-07', '1989-07-11', '2022-11-12 13:42:47', 1, 2),
+(22, 'Biplove Gurung', 'B+', 'Kaski', 'Biplove@gmail.com', '982367421', '$2y$10$lmdIkIg01tu9QZlHEZ.Pj.a70YDmZKiwcO5tyrghoYOzJTEdxs0PS', '2019-10-24', '1990-02-28', '2022-11-12 13:42:47', 1, 2),
+(23, 'Deep K.C', 'AB+', 'Dhankuta', 'deep@yahoo.com', '9808396722', '$2y$10$Ewsh6JMte5RiJewPBCXFBODuDeGZAwD5u0ZFP4EqOHOetyMH.MTs2', '2022-11-07', '1989-07-11', '2022-11-12 13:42:47', 1, 6),
+(24, 'Ganesh Gurung', 'B+', 'Kaski', 'ganesh@gmail.com', '982367421', '$2y$10$lmdIkIg01tu9QZlHEZ.Pj.a70YDmZKiwcO5tyrghoYOzJTEdxs0PS', '2022-10-24', '1990-02-28', '2022-11-12 13:42:47', 0, 2),
+(25, 'Sita K.C', 'AB+', 'Baglung', 'sita@yahoo.com', '982439322', '$2y$10$Ewsh6JMte5RiJewPBCXFBODuDeGZAwD5u0ZFP4EqOHOetyMH.MTs2', '2022-11-07', '1989-07-11', '2022-11-12 13:42:47', 1, 3),
+(26, 'Prasanna Bhattarai', 'B+', 'Kaski', 'Prasanna@gmail.com', '982333421', '$2y$10$lmdIkIg01tu9QZlHEZ.Pj.a70YDmZKiwcO5tyrghoYOzJTEdxs0PS', '2022-10-24', '1990-02-28', '2022-11-12 13:42:47', 1, 2),
+(27, 'Haris Kandel', 'AB+', 'Dhankuta', 'haris@outlook.com', '9889839322', '$2y$10$Ewsh6JMte5RiJewPBCXFBODuDeGZAwD5u0ZFP4EqOHOetyMH.MTs2', '2022-11-07', '1989-07-11', '2022-11-12 13:42:47', 0, 2);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
