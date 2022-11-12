@@ -13,6 +13,8 @@ $stmt1 = $conn->prepare('SELECT
     users.name AS name,
     users.email AS email,
     users.mobile AS mobile,
+    users.donation_count AS dc,
+    users.admin_verified AS av,
     blood_records.id AS bid,
     blood_records.bloodgroup AS bg,
     blood_records.district AS dist,
@@ -21,7 +23,7 @@ $stmt1 = $conn->prepare('SELECT
 
 $stmt1->execute();
 $stmt1->store_result();
-$stmt1->bind_result($name, $email, $mobile, $bid, $bg, $dist, $donated_on);
+$stmt1->bind_result($name, $email, $mobile, $dc, $av, $bid, $bg, $dist, $donated_on);
 
 if (isset($_GET["id"])) {
     if ($stmt2 = $conn->prepare("DELETE FROM blood_records WHERE id = ?")) {
@@ -67,6 +69,8 @@ if (isset($_GET["id"])) {
                     <th>Blood Group</th>
                     <th>District</th>
                     <th>Donated on</th>
+                    <th>Donation Count</th>
+                    <th>Verified User</th>
                     <th>Actions</th>
                 </tr>
                 <?php
@@ -80,6 +84,8 @@ if (isset($_GET["id"])) {
                                     <td>' . $bg . '</td>
                                     <td>' . $dist . '</td>
                                     <td>' . $donated_on . '</td>
+                                    <td>' . $dc . '</td>
+                                    <td>' . ($av ? "Yes" : "No") . '</td>
                                     <td><a href="./manage-records.php?id=' . $bid . '">Delete</a></td>
                                 </tr>';
 
