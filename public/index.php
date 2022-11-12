@@ -7,21 +7,21 @@ $stmt->bind_result($district_name);
 
 if (isset($_POST['search'])) {
     if (isset($_POST['district']) && isset($_POST['bloodgroup'])) {
-        $stmt1 = $conn->prepare('SELECT users.name AS name, users.email AS email, users.mobile AS mobile, blood_records.bloodgroup AS bloodgroup, blood_records.district AS district FROM blood_records INNER JOIN users ON users.id = blood_records.userid AND blood_records.district = ? AND blood_records.bloodgroup = ?');
+        $stmt1 = $conn->prepare('SELECT users.name AS name, users.email AS email, users.mobile AS mobile, users.donation_count AS donation_count, users.admin_verified AS admin_verified, blood_records.bloodgroup AS bloodgroup, blood_records.district AS district FROM blood_records INNER JOIN users ON users.id = blood_records.userid AND blood_records.district = ? AND blood_records.bloodgroup = ?');
         $stmt1->bind_param("ss", $_POST["district"], $_POST["bloodgroup"]);
     } else if (isset($_POST['district'])) {
-        $stmt1 = $conn->prepare('SELECT users.name AS name, users.email AS email, users.mobile AS mobile, blood_records.bloodgroup AS bloodgroup, blood_records.district AS district FROM blood_records INNER JOIN users ON users.id = blood_records.userid AND blood_records.district = ?');
+        $stmt1 = $conn->prepare('SELECT users.name AS name, users.email AS email, users.mobile AS mobile, users.donation_count AS donation_count, users.admin_verified AS admin_verified, blood_records.bloodgroup AS bloodgroup, blood_records.district AS district FROM blood_records INNER JOIN users ON users.id = blood_records.userid AND blood_records.district = ?');
         $stmt1->bind_param("s", $_POST["district"]);
     } else if (isset($_POST['bloodgroup'])) {
-        $stmt1 = $conn->prepare('SELECT users.name AS name, users.email AS email, users.mobile AS mobile, blood_records.bloodgroup AS bloodgroup, blood_records.district AS district FROM blood_records INNER JOIN users ON users.id = blood_records.userid AND blood_records.bloodgroup = ?');
+        $stmt1 = $conn->prepare('SELECT users.name AS name, users.email AS email, users.mobile AS mobile, users.donation_count AS donation_count, users.admin_verified AS admin_verified, blood_records.bloodgroup AS bloodgroup, blood_records.district AS district FROM blood_records INNER JOIN users ON users.id = blood_records.userid AND blood_records.bloodgroup = ?');
         $stmt1->bind_param("s", $_POST["bloodgroup"]);
     } else if (!isset($_POST["district"]) && !isset($_POST["bloodgroup"])) {
-        $stmt1 = $conn->prepare('SELECT users.name AS name, users.email AS email, users.mobile AS mobile, blood_records.bloodgroup AS bloodgroup, blood_records.district AS district FROM blood_records LEFT JOIN users ON users.id = blood_records.userid');
+        $stmt1 = $conn->prepare('SELECT users.name AS name, users.email AS email, users.mobile AS mobile, users.donation_count AS donation_count, users.admin_verified AS admin_verified, blood_records.bloodgroup AS bloodgroup, blood_records.district AS district FROM blood_records LEFT JOIN users ON users.id = blood_records.userid');
     }
 
     $stmt1->execute();
     $stmt1->store_result();
-    $stmt1->bind_result($name, $email, $mobile, $bloodgroup, $district);
+    $stmt1->bind_result($name, $email, $mobile, $donation_count, $admin_verified, $bloodgroup, $district);
 }
 ?>
 
@@ -103,6 +103,8 @@ if (isset($_POST['search'])) {
                                 <th>Contact Phone</th>
                                 <th>Blood Group</th>
                                 <th>District</th>
+                                <th>Donation Count</th>
+                                <th>Admin Verified</th>
                             </tr>
                             <?php
                             $count = 1;
@@ -114,6 +116,8 @@ if (isset($_POST['search'])) {
                                     <td>' . $mobile . '</td>
                                     <td>' . $bloodgroup . '</td>
                                     <td>' . $district . '</td>
+                                    <td>' . $donation_count . '</td>
+                                    <td>' . ($admin_verified ? "Verified" : "Not verified") . '</td>
                                 </tr>';
                                 $count++;
                             }

@@ -8,13 +8,7 @@ if (!isset($_SESSION["loggedin"])) {
 require_once("../app/db/index.php");
 
 if (isset($_POST["mark_unavailable"])) {
-    // var_dump($_POST);
-    // $str = "hello";
-    // var_dump($str);
-    //echo ($conn->prepare("DELETE FROM blood_records WHERE userid = ?"));
     $stmt2 = $conn->prepare("DELETE FROM blood_records WHERE userid = ?");
-    // var_dump($stmt2);
-    // echo "here";
     $stmt2->bind_param("i", $_SESSION["id"]);
     $stmt2->execute();
     if ($stmt2->affected_rows > 0) {
@@ -23,18 +17,17 @@ if (isset($_POST["mark_unavailable"])) {
     }
     header("Location: ./profile.php?status=failure&message=Couldn't delete that blood record.");
 } else {
-    if ($stmt = $conn->prepare("SELECT name, bloodgroup, district, email, mobile, lastdonated, dob FROM users WHERE id = ? ")) {
+    if ($stmt = $conn->prepare("SELECT name, bloodgroup, district, email, mobile, lastdonated, dob, admin_verified, donation_count FROM users WHERE id = ? ")) {
         $stmt->bind_param("i", $_SESSION["id"]);
         $stmt->execute();
         $stmt->store_result();
-        $stmt->bind_result($name, $bloodgroup, $district, $email, $mobile, $lastdonated, $dob);
+        $stmt->bind_result($name, $bloodgroup, $district, $email, $mobile, $lastdonated, $dob, $admin_verified, $donation_count);
         $stmt->fetch();
     }
 
     if ($stmt1 = $conn->prepare("SELECT id FROM blood_records WHERE userid = ? ")) {
         $stmt1->bind_param("i", $_SESSION["id"]);
         $stmt1->execute();
-        // var_dump($stmt1);
     }
 }
 ?>
@@ -92,7 +85,9 @@ if (isset($_POST["mark_unavailable"])) {
                 if ($lastdonated !== "") {
                 ?>
                     <div>
-                        You donated your blood last time on:
+                        You have donated your blood
+                        <?= $donation_count ?>
+                        time/s your latest donation was on:
                         <span class="underline">
                             <?= $lastdonated ?>
                         </span>

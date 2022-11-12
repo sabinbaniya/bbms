@@ -29,7 +29,7 @@ require_once("../app/db/index.php");
                     $stmt->execute();
                     // var_dump($stmt);
                     if ($stmt->affected_rows > 0) {
-                        if ($stmt1 = $conn->prepare('UPDATE users SET lastdonated=? WHERE id=?')) {
+                        if ($stmt1 = $conn->prepare('UPDATE users SET lastdonated=? , donation_count=donation_count+1 WHERE id=?')) {
                             $stmt1->bind_param('si',  date('Y-m-d'), $_SESSION['id']);
                             $stmt1->execute();
                             header('location: ./donate.php?status=success&message=You have succesfully donated blood. ');
